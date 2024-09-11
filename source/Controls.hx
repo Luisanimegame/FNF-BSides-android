@@ -726,6 +726,7 @@ class Controls extends FlxActionSet
 		inline forEachBound(control, (action, state) -> addKeys(action, copyKeys, state));
 		#else
 		forEachBound(control, function(action, state) addKeys(action, copyKeys, state));
+		#end
 	}
 
 	/**
