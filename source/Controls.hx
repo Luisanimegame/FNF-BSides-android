@@ -715,7 +715,6 @@ class Controls extends FlxActionSet
 	 * Sets all actions that pertain to the binder to trigger when the supplied keys are used.
 	 * If binder is a literal you can inline this
 	 */
-	#if !mobile
 	public function bindKeys(control:Control, keys:Array<FlxKey>)
 	{
 		var copyKeys:Array<FlxKey> = keys.copy();
@@ -727,7 +726,6 @@ class Controls extends FlxActionSet
 		inline forEachBound(control, (action, state) -> addKeys(action, copyKeys, state));
 		#else
 		forEachBound(control, function(action, state) addKeys(action, copyKeys, state));
-		#end
 	}
 
 	/**
