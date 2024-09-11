@@ -6,7 +6,7 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
 import flixel.FlxSprite;
-#if MODS_ALLOWED
+#if windows
 import sys.io.File;
 import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
@@ -22,7 +22,7 @@ class Paths
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
 	inline public static var VIDEO_EXT = "mp4";
 
-	#if MODS_ALLOWED
+	#if windows
 	#if (haxe >= "4.0.0")
 	public static var customImagesLoaded:Map<String, Bool> = new Map();
 	public static var customSoundsLoaded:Map<String, Sound> = new Map();
@@ -49,7 +49,7 @@ class Paths
 	#end
 
 	public static function destroyLoadedImages(ignoreCheck:Bool = false) {
-		#if MODS_ALLOWED
+		#if windows
 		if(!ignoreCheck && ClientPrefs.imagesPersist) return; //If there's 20+ images loaded, do a cleanup just for preventing a crash
 
 		for (key in customImagesLoaded.keys()) {
@@ -135,7 +135,7 @@ class Paths
 
 	static public function video(key:String)
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var file:String = modsVideo(key);
 		if(FileSystem.exists(file)) {
 			return file;
@@ -146,7 +146,7 @@ class Paths
 
 	static public function sound(key:String, ?library:String):Dynamic
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var file:String = modsSounds(key);
 		if(FileSystem.exists(file)) {
 			if(!customSoundsLoaded.exists(file)) {
@@ -165,7 +165,7 @@ class Paths
 
 	inline static public function music(key:String, ?library:String):Dynamic
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var file:String = modsMusic(key);
 		if(FileSystem.exists(file)) {
 			if(!customSoundsLoaded.exists(file)) {
@@ -179,7 +179,7 @@ class Paths
 
 	inline static public function voices(song:String):Any
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var file:Sound = returnSongFile(modsSongs(song.toLowerCase().replace(' ', '-') + '/Voices'));
 		if(file != null) {
 			return file;
@@ -190,7 +190,7 @@ class Paths
 
 	inline static public function inst(song:String):Any
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var file:Sound = returnSongFile(modsSongs(song.toLowerCase().replace(' ', '-') + '/Inst'));
 		if(file != null) {
 			return file;
@@ -199,7 +199,7 @@ class Paths
 		return 'songs:assets/songs/${song.toLowerCase().replace(' ', '-')}/Inst.$SOUND_EXT';
 	}
 
-	#if MODS_ALLOWED
+	#if windows
 	inline static private function returnSongFile(file:String):Sound
 	{
 		if(FileSystem.exists(file)) {
@@ -214,7 +214,7 @@ class Paths
 
 	inline static public function image(key:String, ?library:String):Dynamic
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var imageToReturn:FlxGraphic = addCustomGraphic(key);
 		/*
 		//SHADOWMARIO TEST THIS IM NOT AT HOME RN.
@@ -234,7 +234,7 @@ class Paths
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
 		#if sys
-		#if MODS_ALLOWED
+		#if windows
 		if (!ignoreMods && FileSystem.exists(mods(key)))
 			return File.getContent(mods(key));
 		#end
@@ -261,7 +261,7 @@ class Paths
 
 	inline static public function font(key:String)
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var file:String = modsFont(key);
 		if(FileSystem.exists(file)) {
 			return file;
@@ -272,7 +272,7 @@ class Paths
 
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
-		#if MODS_ALLOWED
+		#if windows
 		if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
 			return true;
 		}
@@ -286,7 +286,7 @@ class Paths
 
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var imageLoaded:FlxGraphic = addCustomGraphic(key);
 		var xmlExists:Bool = false;
 		if(FileSystem.exists(modsXml(key))) {
@@ -301,7 +301,7 @@ class Paths
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
 	{
-		#if MODS_ALLOWED
+		#if windows
 		var imageLoaded:FlxGraphic = addCustomGraphic(key);
 		var txtExists:Bool = false;
 		if(FileSystem.exists(modsTxt(key))) {
@@ -318,7 +318,7 @@ class Paths
 		return path.toLowerCase().replace(' ', '-');
 	}
 	
-	#if MODS_ALLOWED
+	#if windows
 	static public function addCustomGraphic(key:String):FlxGraphic {
 		if(FileSystem.exists(modsImages(key))) {
 			if(!customImagesLoaded.exists(key)) {
